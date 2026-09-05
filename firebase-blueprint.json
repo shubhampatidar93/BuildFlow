@@ -1,0 +1,114 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Student profile with technical background, preferences and project constraints",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "skills": { "type": "array" },
+        "interests": { "type": "array" },
+        "experienceLevel": { "type": "string", "enum": ["Beginner", "Intermediate", "Advanced"] },
+        "teamSize": { "type": "string", "enum": ["1", "2", "3", "4", "5+"] },
+        "timeline": { "type": "string", "enum": ["2 weeks", "1 month", "2 months", "3 months", "4+ months"] },
+        "budget": { "type": "string", "enum": ["Free", "Under ₹1,000", "₹1,000–₹5,000", "₹5,000+"] },
+        "preferredDifficulty": { "type": "string", "enum": ["Easy", "Medium", "Hard", "Innovative"] },
+        "onboardingCompleted": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "name", "skills", "interests", "experienceLevel", "timeline"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Final-year student project definition, blueprint, scores, and status",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "problem": { "type": "string" },
+        "solution": { "type": "string" },
+        "targetUsers": { "type": "string" },
+        "techStack": { "type": "array" },
+        "requiredSkills": { "type": "array" },
+        "duration": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "feasibilityScore": { "type": "number" },
+        "noveltyScore": { "type": "number" },
+        "impactScore": { "type": "number" },
+        "overallScore": { "type": "number" },
+        "whyFits": { "type": "string" },
+        "progress": { "type": "number" },
+        "health": { "type": "string", "enum": ["ON TRACK", "AT RISK", "BEHIND"] },
+        "currentPhase": { "type": "string" },
+        "startDate": { "type": "string" },
+        "deadline": { "type": "string" },
+        "blueprint": { "type": "object" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "ownerId", "title", "techStack", "progress"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Executable project task belonging to a specific phase",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "projectId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "phase": { "type": "string" },
+        "phaseIndex": { "type": "number" },
+        "priority": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] },
+        "status": { "type": "string", "enum": ["NOT STARTED", "IN PROGRESS", "COMPLETED", "BLOCKED"] },
+        "estimatedHours": { "type": "number" },
+        "actualHours": { "type": "number" },
+        "dependencies": { "type": "string" },
+        "deliverable": { "type": "string" },
+        "whyMatters": { "type": "string" },
+        "aiTips": { "type": "string" },
+        "commonMistakes": { "type": "string" },
+        "assignedTo": { "type": "string" },
+        "completedAt": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "projectId", "title", "phase", "priority", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Stores individual student profiles"
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Stores user projects"
+    },
+    "/projects/{projectId}/phases/{phaseId}": {
+      "schema": "object",
+      "description": "Phases for project roadmap"
+    },
+    "/projects/{projectId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Tasks for project execution"
+    },
+    "/projects/{projectId}/team/{memberId}": {
+      "schema": "object",
+      "description": "Collaborating team members"
+    },
+    "/projects/{projectId}/activities/{activityId}": {
+      "schema": "object",
+      "description": "Project activity logs and timeline events"
+    },
+    "/projects/{projectId}/mentorMessages/{messageId}": {
+      "schema": "object",
+      "description": "AI Mentor conversation history and suggestions"
+    }
+  }
+}

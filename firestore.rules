@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    match /projects/{projectId} {
+      allow read, create, update, delete: if isSignedIn();
+
+      match /phases/{phaseId} {
+        allow read, write: if isSignedIn();
+      }
+
+      match /tasks/{taskId} {
+        allow read, write: if isSignedIn();
+      }
+
+      match /team/{memberId} {
+        allow read, write: if isSignedIn();
+      }
+
+      match /activities/{activityId} {
+        allow read, write: if isSignedIn();
+      }
+
+      match /mentorMessages/{messageId} {
+        allow read, write: if isSignedIn();
+      }
+    }
+  }
+}

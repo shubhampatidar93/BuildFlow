@@ -1,0 +1,6 @@
+{
+  "name": "BUILDflow AI",
+  "description": "From Idea to Execution. Turn your final-year project idea into a step-by-step execution plan and actually finish it.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
